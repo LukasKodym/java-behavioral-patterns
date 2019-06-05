@@ -1,29 +1,19 @@
 package pl.lukas;
 
-import java.util.Observable;
-import java.util.Observer;
+import pl.lukas.observers.ObservableTempValue;
 
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        Observable observableValue = new Observable() {
-            @Override
-            public void notifyObservers(Object arg) {
-                super.setChanged();
-                super.notifyObservers(arg);
-            }
-        };
+        ObservableTempValue observableValue = new ObservableTempValue();
 
         observableValue.addObserver((observable, o) -> System.out.println("1 " + o.toString()));
+        observableValue.addObserver((observable, o) -> System.out.println("2 " + o.toString()));
 
-        observableValue.addObserver(new Observer() {
-            @Override
-            public void update(Observable observable, Object o) {
-                System.out.println("2 " + o.toString());
-            }
-        });
-
-        observableValue.notifyObservers(54);
+        while (true) {
+            Thread.sleep(500);
+            observableValue.setValue((int) (observableValue.getOldTemp() + Math.random() * 6 - 2));
+        }
     }
 }
