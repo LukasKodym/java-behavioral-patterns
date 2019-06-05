@@ -15,5 +15,7 @@ public class App {
             Thread.sleep(500);
             observableValue.setValue((int) (observableValue.getOldTemp() + Math.random() * 6 - 2));
         }
+
+        //strategy pattern introduction
     }
 }
